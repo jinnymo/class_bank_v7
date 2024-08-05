@@ -7,6 +7,9 @@
 	<p>Footer</p>
 </div>
 
+</div>
+</div>
 </body>
 </html>
 <!-- end of footer.jsp -->
+
