@@ -13,7 +13,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Builder
 @ToString
-public class Histroy {
+public class History {
 
 	private Integer id;
 	private Long amount;
