@@ -7,18 +7,30 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.tenco.bank.dto.SignInDTO;
 import com.tenco.bank.dto.SignUpDTO;
 import com.tenco.bank.handler.exception.DataDeliveryException;
+import com.tenco.bank.repository.model.User;
 import com.tenco.bank.service.UserService;
+
+import jakarta.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.RequestParam;
+
+
 
 @Controller
 @RequestMapping("/user") // 대문처리 
 public class UserController {
 	
-	@Autowired
 	private UserService userService;
+	private final HttpSession session;
 	
-	
+	@Autowired
+	public UserController(UserService service, HttpSession session) {
+
+		this.userService = service;
+		this.session = session;
+	}
 	/**
 	 * 회원 가입 페이지 요청 
 	 * 주소 설계 : http://localhost:8080/user/sign-up
@@ -58,8 +70,47 @@ public class UserController {
 		
 		
 		//TODO - 추후 수정 
-		return "redirect:/index";
+		return "redirect:/user/sign-in";
 	}
+	
+	
+	/*
+	 * 로그인 화면 요청
+	 * 주소 설계 : http://localhost:8080/user/sign-in
+	 */
+	@GetMapping("/sign-in")
+	public String signInPage() {
+		return "user/signIn";
+	}
+	
+	
+	/**
+	 * 회원가입 요청 처리
+	 * @return
+	 */
+	@PostMapping("/sign-in")
+	public String signProc(SignInDTO dto) {
+		
+		if (dto.getUsername() == null || dto.getUsername().isEmpty()) {
+			throw new DataDeliveryException("username 을 입력 하세요", HttpStatus.BAD_REQUEST);
+		}
+		if (dto.getPassword() == null || dto.getPassword().isEmpty()) {
+			throw new DataDeliveryException("password 을 입력 하세요", HttpStatus.BAD_REQUEST);
+		}
+		User principal = userService.readUser(dto);
+		session.setAttribute("principal", principal);
+		
+		//TODO- 계좌 목록 페이지 이동 처리 예정 || 현재 -> 메인페이지 
+		return "redirect:/main-page";
+	}
+	
+	@GetMapping("/logout")
+	public String logout() {
+		session.invalidate();
+		return "redirect:/user/sign-in";
+	}
+	
+	
 	
 }
 
