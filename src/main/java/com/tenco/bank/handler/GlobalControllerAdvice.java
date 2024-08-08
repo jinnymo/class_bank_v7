@@ -49,7 +49,7 @@ public class GlobalControllerAdvice {
 		sb.append("<script>");
 
 		sb.append("alert(`"+ e.getMessage() +"`);");		
-		sb.append("window.history.back()"); //뒤로가기 기능
+		sb.append("location.href='/user/sign-in';"); //뒤로가기 기능
 		
 		sb.append("</script>");
 		

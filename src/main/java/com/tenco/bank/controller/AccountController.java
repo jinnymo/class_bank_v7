@@ -2,7 +2,6 @@ package com.tenco.bank.controller;
 
 import java.util.List;
 
-import org.apache.catalina.authenticator.SavedRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -10,15 +9,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.tenco.bank.dto.SaveDTO;
 import com.tenco.bank.handler.exception.DataDeliveryException;
 import com.tenco.bank.handler.exception.UnAuthorizedException;
-import com.tenco.bank.repository.interfaces.AccountRepository;
 import com.tenco.bank.repository.model.Account;
 import com.tenco.bank.repository.model.User;
 import com.tenco.bank.service.AccountService;
+import com.tenco.bank.utils.Define;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -44,9 +42,9 @@ public class AccountController {
 	public String savePage() {
 
 		// verify check needed(all account method)
-		User principal = (User) session.getAttribute("principal");
+		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		if (principal == null) {
-			throw new UnAuthorizedException("none Authorized User", HttpStatus.UNAUTHORIZED);
+			throw new UnAuthorizedException(Define.NOT_AN_AUTHENTICATED_USER, HttpStatus.UNAUTHORIZED);
 		}
 		return "account/save";
 	}
@@ -59,19 +57,19 @@ public class AccountController {
 	 */
 	@PostMapping("/save")
 	public String saveProc(SaveDTO dto) {
-		User principal = (User)session.getAttribute("principal");
+		User principal = (User)session.getAttribute(Define.PRINCIPAL);
 		
 		if (principal == null) {
-			throw new UnAuthorizedException("none Authorized User", HttpStatus.UNAUTHORIZED);
+			throw new UnAuthorizedException(Define.NOT_AN_AUTHENTICATED_USER, HttpStatus.UNAUTHORIZED);
 		}
 		if (dto.getNumber() == null || dto.getNumber().isEmpty()) {
-			throw new DataDeliveryException("계좌번호를 입력 하세요", HttpStatus.BAD_REQUEST);
+			throw new DataDeliveryException(Define.ENTER_YOUR_ACCOUNT_NUMBER, HttpStatus.BAD_REQUEST);
 		}
 		if (dto.getPassword() == null || dto.getPassword().isEmpty()) {
-			throw new DataDeliveryException("비밀번호를 입력 하세요", HttpStatus.BAD_REQUEST);
+			throw new DataDeliveryException(Define.ENTER_YOUR_PASSWORD, HttpStatus.BAD_REQUEST);
 		}
 		if (dto.getBalance() == null || dto.getBalance() < 1) {
-			throw new DataDeliveryException("초기 입금 금액을 올바르게 입력하세요", HttpStatus.BAD_REQUEST);
+			throw new DataDeliveryException(Define.ENTER_YOUR_BALANCE, HttpStatus.BAD_REQUEST);
 		}
 		
 		accountService.createAccount(dto,principal.getId());
@@ -87,16 +85,15 @@ public class AccountController {
 	 */
 	@GetMapping("/list")
 	public String listPage(Model model) {
-		User principal = (User)session.getAttribute("principal");
+		User principal = (User)session.getAttribute(Define.PRINCIPAL);
 		if (principal == null) {
-			throw new UnAuthorizedException("로그인이 필요한 서비스 입니다.",HttpStatus.UNAUTHORIZED);
+			throw new UnAuthorizedException(Define.ENTER_YOUR_LOGIN,HttpStatus.UNAUTHORIZED);
 		}
 		List<Account> accountList = accountService.readAccountListByUserId(principal.getId());
 		if (accountList.isEmpty()) {
-			model.addAttribute("accountList",null);
+			model.addAttribute(Define.ACCOUNT_LIST,null);
 		}else {			
-			System.out.println("222");
-			model.addAttribute("accountList",accountList);
+			model.addAttribute(Define.ACCOUNT_LIST,accountList);
 		}
 		return "account/list";
 	}

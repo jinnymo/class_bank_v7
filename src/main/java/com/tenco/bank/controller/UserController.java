@@ -12,9 +12,9 @@ import com.tenco.bank.dto.SignUpDTO;
 import com.tenco.bank.handler.exception.DataDeliveryException;
 import com.tenco.bank.repository.model.User;
 import com.tenco.bank.service.UserService;
+import com.tenco.bank.utils.Define;
 
 import jakarta.servlet.http.HttpSession;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 
@@ -56,13 +56,13 @@ public class UserController {
 		//2. 유효성 검사
 		
 		if (dto.getUsername() == null || dto.getUsername().isEmpty()) {
-			throw new DataDeliveryException("username 을 입력 하세요", HttpStatus.BAD_REQUEST);
+			throw new DataDeliveryException(Define.ENTER_YOUR_USERNAME, HttpStatus.BAD_REQUEST);
 		}
 		if (dto.getPassword() == null || dto.getPassword().isEmpty()) {
-			throw new DataDeliveryException("password 을 입력 하세요", HttpStatus.BAD_REQUEST);
+			throw new DataDeliveryException(Define.ENTER_YOUR_PASSWORD, HttpStatus.BAD_REQUEST);
 		}
 		if (dto.getFullname() == null || dto.getFullname().isEmpty()) {
-			throw new DataDeliveryException("fullname 을 입력 하세요", HttpStatus.BAD_REQUEST);
+			throw new DataDeliveryException(Define.ENTER_YOUR_FULLNAME, HttpStatus.BAD_REQUEST);
 		}
 		
 		//서비스 객체로 전달
@@ -92,16 +92,16 @@ public class UserController {
 	public String signProc(SignInDTO dto) {
 		
 		if (dto.getUsername() == null || dto.getUsername().isEmpty()) {
-			throw new DataDeliveryException("username 을 입력 하세요", HttpStatus.BAD_REQUEST);
+			throw new DataDeliveryException(Define.ENTER_YOUR_USERNAME, HttpStatus.BAD_REQUEST);
 		}
 		if (dto.getPassword() == null || dto.getPassword().isEmpty()) {
-			throw new DataDeliveryException("password 을 입력 하세요", HttpStatus.BAD_REQUEST);
+			throw new DataDeliveryException(Define.ENTER_YOUR_PASSWORD, HttpStatus.BAD_REQUEST);
 		}
 		User principal = userService.readUser(dto);
-		session.setAttribute("principal", principal);
+		session.setAttribute(Define.PRINCIPAL, principal);
 		
 		//TODO- 계좌 목록 페이지 이동 처리 예정 || 현재 -> 메인페이지 
-		return "redirect:/main-page";
+		return "redirect:/account/list";
 	}
 	
 	@GetMapping("/logout")
