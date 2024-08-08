@@ -1,5 +1,7 @@
 package com.tenco.bank.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -34,6 +36,22 @@ public class AccountService {
 		if (result != 1) {
 			throw new DataDeliveryException("회원가입 실패", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+		
+	}
+
+	
+	public List<Account> readAccountListByUserId(Integer principalId) {
+		List<Account> accountListEntity = null;
+		
+		try {
+			accountListEntity = accountRepository.findByUserId(principalId);
+		} catch (DataAccessException e) {
+			throw new DataDeliveryException("잘못된 처리 입니다. ", HttpStatus.INTERNAL_SERVER_ERROR);
+		} catch (Exception e) {
+			throw new RedirectException("알 수 없는 오류 ", HttpStatus.SERVICE_UNAVAILABLE);
+		}
+		
+		return accountListEntity;
 		
 	}
 	
