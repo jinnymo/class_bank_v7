@@ -19,7 +19,7 @@ public class SaveDTO {
 	private String password;
 	private Long balance;
 	
-	public Account createAccount(int userId) {
+	public Account toAccount(int userId) {
 		return Account.builder()
 					.number(number)
 					.password(password)

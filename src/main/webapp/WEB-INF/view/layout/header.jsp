@@ -57,7 +57,7 @@
 						<ul class="nav nav-pills flex-column">
 							<li class="nav-item"><a class="nav-link" href="/account/list">my account list</a></li>
 							<li class="nav-item"><a class="nav-link" href="/account/save">new account</a></li>
-							<li class="nav-item"><a class="nav-link" href="/account/wirhdraw">width draw</a></li>
+							<li class="nav-item"><a class="nav-link" href="/account/withdrawal">width draw</a></li>
 							<li class="nav-item"><a class="nav-link" href="/account/deposit">deposit</a></li>
 							<li class="nav-item"><a class="nav-link" href="/account/transfer">account transfer</a></li>
 						</ul>
