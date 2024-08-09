@@ -3,6 +3,7 @@ package com.tenco.bank.repository.model;
 import java.sql.Timestamp;
 
 import org.springframework.http.HttpStatus;
+
 import com.tenco.bank.handler.exception.DataDeliveryException;
 import com.tenco.bank.utils.Define;
 
@@ -58,5 +59,4 @@ public class Account {
 	}
 	
 }
-
 
