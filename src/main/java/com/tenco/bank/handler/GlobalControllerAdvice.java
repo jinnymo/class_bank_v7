@@ -18,13 +18,17 @@ public class GlobalControllerAdvice {
 	 * 로깅처리 - 동기적 방식(system.out.println), @slf4j(비동기 처리 됨)
 	 */
 	
-	@ExceptionHandler(Exception.class)
-	public void exception(Exception e) {
-		System.out.println("----------------------------------");
-		System.out.println(e.getClass().getName());
-		System.out.println(e.getMessage());
-		System.out.println("----------------------------------");	
-	}
+//	@ExceptionHandler(Exception.class)
+//	public void exception(Exception e) {
+//		System.out.println("----------------------------------");
+//		System.out.println(e.getClass().getName());
+//		System.out.println(e.getMessage());
+//		System.out.println("----------------------------------");	
+//	}
+//	
+	
+	
+	
 	
 	//예외를 내릴 때 데이터를 내리고 싶다면 1. @RestControllerAdvice 를 사용하면 된다.
 	//단 @ControllerAdvice 를 사용하고 있다면 @ResponseBody 를 사용하면 되낟.

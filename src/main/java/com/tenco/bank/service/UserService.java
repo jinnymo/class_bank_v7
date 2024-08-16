@@ -36,6 +36,7 @@ public class UserService {
 	public void creatUser(SignUpDTO dto) {
 		int result = 0;
 		
+		
 		try {
 			//코드 추가 부분
 			// 회원가입 요청시 사용자가 던진 비밀번호 값을 암호화 처리 해야함
@@ -85,6 +86,19 @@ public class UserService {
 		}
 		return userEntity;
 	}
+	
+	
+	/**
+	 * username 기반 사용자 확인 
+	 * @param username
+	 * @return User || null
+	 */
+	@Transactional
+	public User searchUsername(String username) {
+		
+		return userRepository.findByUsername(username);
+	}
+	
 	
 }
 

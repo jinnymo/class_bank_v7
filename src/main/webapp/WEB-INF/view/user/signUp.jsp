@@ -31,6 +31,13 @@
 		
 		
 		<button type="submit" class="btn btn-primary">회원가입</button>
+		
+		<div>
+		<a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=c9133bb1945e2fd143b7ef2c8af37a6d&redirect_uri=http://localhost:8080/user/kakao">
+		     <img src="" alt="images/kakao_login_small.png">
+
+		 </a>
+		</div>
 	</form>
 
 

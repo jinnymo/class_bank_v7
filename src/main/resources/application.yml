@@ -48,4 +48,7 @@ logging:
   level:
     org.apache.ibatis: DEBUG # MyBatis 로깅레벨을 디버그로 설정하여 실행되는 SQL 쿼리와 내부로깅 정보를 콘솔에 추가한다.
 
+tenco:
+  key: 54d5cb2d332dbdb4850293caae4559ce88b65163f1ea5d4e4b3ac49d772ded14
+
 
